@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>World Cup 2014</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'><link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+
+
+
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script>
+        $(document).ready(function(){
+        var index = 5;
+        var matches = null;
+
+            $.getJSON("http://worldcup.sfg.io/matches", function(data) {
+              matches = data;
+              createMatches(index,matches);
+            });
+
+            $(window).scroll(function(){
+
+              var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
+              var  scrolltrigger = 0.95;
+
+              if  ((wintop/(docheight-winheight)) > scrolltrigger) {
+                index += 5;
+               createMatches(index,matches);
+              }
+           });
+
+            function createMatches(index,data){
+              var template = '<section><div class="match-container"><div class="match"><span class="icon ion-ios7-football"></span><h1 class="status"></h1><div class="games"></div><h1 class="location"></h1></div></div></section>';
+                var len = data.length;
+                if (index > len){
+                  index = len;
+                }
+                for (var i =0; i<index; ++i){
+                    $clone = $($.parseHTML(template));
+                    var locationName = data[i]['location'].replace(/\s/g , "_");
+                    var file = "url('img/"+locationName+".jpg')";
+                    $($clone).css('background-image',file);
+                    if (data[i]['status'] == "completed"){
+                      $clone.find('.status').html("Completed");
+                      homeTeam = data[i]['home_team']['country'];
+                      homeTeamGoals = data[i]['home_team']['goals'];
+                      awayTeam = data[i]['away_team']['country'];
+                      awayTeamGoals = data[i]['away_team']['goals'];
+                      msg = "<h1><span class='away'>"+awayTeam+" "+awayTeamGoals+"</span> vs <span class='home'>"+homeTeam+" "+homeTeamGoals+"</span></h1>";
+                    }else{
+                      $clone.find('.status').html("Upcoming Match");
+                      homeTeam = data[i]['home_team']['country'];
+                      awayTeam = data[i]['away_team']['country'];
+                      msg = "<h1><span class='away'>"+awayTeam+"</span> vs <span class='home'>"+homeTeam+"</span></h1>";
+                    }
+                    $clone.find('.games').append(msg);
+                    $clone.find('.location').html(data[i]['location'])
+                    $clone.css('position','absolute');
+                    $clone.css('top',i*100+"%");
+                    $clone.css('opacity',1);
+                    $('body').append($clone);
+                }
+              }
+
+            });
+
+        </script>
+    </body>
+</html>

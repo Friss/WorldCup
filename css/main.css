@@ -1,0 +1,49 @@
+body {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Shadows Into Light', cursive;
+}
+
+.icon {
+  font-size: 80px;
+}
+
+section {
+  min-height: 450px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: table;
+  background: #000 no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  transition: all .2s ease-in;
+  opacity: 0;
+  border-bottom: 10px solid #ccc;
+}
+
+section .match-container {
+  display: table-cell;
+  vertical-align: middle;
+  z-index: 2;
+}
+
+.match {
+  background: rgba(0,0,0,.5);
+  padding-bottom: 20px;
+}
+
+a:hover {
+  color: #428bca;
+}
+
+
+
+
+
+
+
+
