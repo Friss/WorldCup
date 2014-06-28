@@ -51,19 +51,13 @@
                     var locationName = data[i]['location'].replace(/\s/g , "_");
                     var file = "url('img/"+locationName+".jpg')";
                     $($clone).css('background-image',file);
-                    if (data[i]['status'] == "completed"){
-                      $clone.find('.status').html("Completed");
-                      homeTeam = data[i]['home_team']['country'];
-                      homeTeamGoals = data[i]['home_team']['goals'];
-                      awayTeam = data[i]['away_team']['country'];
-                      awayTeamGoals = data[i]['away_team']['goals'];
-                      msg = "<h1><span class='away'>"+awayTeam+" "+awayTeamGoals+"</span> vs <span class='home'>"+homeTeam+" "+homeTeamGoals+"</span></h1>";
-                    }else{
-                      $clone.find('.status').html("Upcoming Match");
-                      homeTeam = data[i]['home_team']['country'];
-                      awayTeam = data[i]['away_team']['country'];
-                      msg = "<h1><span class='away'>"+awayTeam+"</span> vs <span class='home'>"+homeTeam+"</span></h1>";
-                    }
+                    $clone.find('.status').html("Current Match");
+                    homeTeam = data[i]['home_team']['country'];
+                    homeTeamGoals = data[i]['home_team']['goals'];
+                    awayTeam = data[i]['away_team']['country'];
+                    awayTeamGoals = data[i]['away_team']['goals'];
+                    msg = "<h1><span class='away'>"+awayTeam+" "+awayTeamGoals+"</span> vs <span class='home'>"+homeTeam+" "+homeTeamGoals+"</span></h1>";
+
                     $clone.find('.games').append(msg);
                     $clone.find('.location').html(data[i]['location'])
                     $clone.css('position','absolute');
